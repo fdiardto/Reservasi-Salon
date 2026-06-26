@@ -1,0 +1,300 @@
+/* Menggunakan font yang terkesan playful dan ramah */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #FFF5F5; /* Soft pinkish cream */
+    color: #5D4037; /* Cokelat gelap lembut, bukan hitam kaku */
+}
+
+h1, h2, h3 {
+    font-family: 'Fredoka', sans-serif;
+    color: #FF8AA8; /* Pastel pink */
+}
+
+/* Navigation Bar */
+header {
+    background-color: #FFFFFF;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(255, 138, 168, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 3px dashed #FFC1CC;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    flex-direction: row !important;
+}
+
+.hamburger,
+    .menu-toggle{
+        display: block !important;
+        order: 1;
+        margin: 0;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+.logo {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 28px;
+    color: #FF8AA8;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #6D6875;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background-color: #FFD3E1;
+    color: #FF5C8A;
+}
+
+@media (max-width:768px){
+
+.menu-toggle{
+    display:block;
+}
+
+.nav-links{
+    display:none;
+    flex-direction:column;
+    width:100%;
+}
+
+.nav-links.active{
+    display:flex;
+}
+
+}
+
+/* Hero Section & Umum */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: #FFFFFF;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+    border: 2px solid #FFE5EC;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #FF8AA8;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(255, 138, 168, 0.3);
+    transition: transform 0.2s, background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background-color: #FF5C8A;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    background-color: #FFE5EC;
+    color: #6D6875;
+    margin-top: 50px;
+    border-top: 3px dashed #FF8AA8;
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .section-heading {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #ff6f91; /* Sesuaikan dengan warna tema ChicCut Salon Anda */
+    }
+
+    .btn-tentang:hover {
+    background-color: #ff4d7a !important;
+    transform: scale(1.05);
+    }
+
+    /* ========================= */
+    /* RESPONSIVE */
+    /* ========================= */
+
+    @media screen and (max-width:768px){
+
+        nav{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+        }
+
+        .menu-toggle{
+            display:block;
+        }
+
+        .nav-links{
+            display:none;
+            width:100%;
+            flex-direction:column;
+            text-align:center;
+            margin-top:15px;
+            gap:10px;
+        }
+
+        .nav-links.active{
+            display:flex;
+        }
+
+        .nav-links li{
+            width:100%;
+        }
+
+        .nav-links li a{
+            display:block;
+            padding:12px;
+        }
+
+        /* Hero */
+        .hero{
+            flex-direction:column;
+            text-align:center;
+        }
+
+        .hero-img img{
+            width:90%;
+        }
+
+        /* Card */
+        .card{
+            padding:20px;
+        }
+
+        /* Grid */
+        .featured-container,
+        .stylist-grid{
+            grid-template-columns:1fr;
+        }
+
+        table{
+            display:block;
+            overflow-x:auto;
+            white-space:nowrap;
+        }
+    }
+
+        /*Agar Gambar Responsive*/
+
+        img{
+            max-width:100%;
+            height:auto;
+        }
+
+        /*Agar section tidak melebar*/
+        .container{
+            width:100%;
+            max-width:1200px;
+            margin:auto;
+            padding:20px;
+        }
+
+        /*Tabel untuk Responsive*/ 
+        .table-container{
+            overflow-x:auto;
+        }
+        
+        @media screen and (max-width:768px){
+
+        .container{
+            display:block !important;
+        }
+
+    }
+
+        /*=====RESPONSIVE YOUTUBE*/
+        .video-box{
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border: 3px solid #FFE5EC;
+            border-radius: 15PX;
+            box-sizing: border-box;
+        }
+
+        .video-box iframe{
+            position:absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .gallery-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-grid img{
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 3px solid #FFE5EC;
+            box-sizing: border-box;
+        }
+
+        @media (max-width:768px){
+            .gallery-grid{
+                grid-template-columns: 1fr;
+            }
+        }
+}

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Booking - ChicCut Salon</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        label { font-weight: 600; color: #6D6875; }
+        input, select, textarea { padding: 12px; border-radius: 12px; border: 2px solid #FFE5EC; background-color: #FFF9FA; width: 100%; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: #FF8AA8; box-shadow: 0 0 8px rgba(255,138,168,0.2); }
+        .total-box { background: #FFF0F5; padding: 15px; border-radius: 12px; font-weight: bold; color: #FF5C8A; border: 1px dashed #FF8AA8; }
+        
+        /* Desain Kalender Lucu */
+        .calendar-container { background: #FFF9FA; border: 2px solid #FFE5EC; border-radius: 15px; padding: 15px; margin-top: 5px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; margin-top: 10px; }
+        .calendar-header { font-weight: bold; color: #FF8AA8; font-size: 14px; }
+        .date-btn { padding: 10px; border: none; border-radius: 10px; background: #FFFFFF; color: #5D4037; cursor: pointer; font-weight: bold; transition: all 0.2s; border: 1px solid #FFE5EC; }
+        .date-btn:hover:not(.booked) { background: #FFD3E1; color: #FF5C8A; }
+        
+        /* WARNA UNTUK TANGGAL YANG SUDAH DI-RESERVASI (BOOKED) */
+        .date-btn.booked { background: #FFCCD5; color: #FF4D6D; border: 1px solid #FFB3C1; cursor: not-allowed; position: relative; }
+        .date-btn.booked::after { content: '❌'; position: absolute; top: -2px; right: -2px; font-size: 10px; }
+        
+        /* Warna saat user memilih tanggal yang tersedia */
+        .date-btn.selected { background: #FF8AA8; color: white; border-color: #FF8AA8; }
+    
+        .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);justify-content:center;align-items:center;z-index:9999}
+        .modal-content{background:#fff;width:420px;max-width:92%;padding:28px;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.2);animation:pop .25s ease}
+        @keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+        .booking-detail{background:#FFF8FB;border-radius:12px;padding:12px;margin:15px 0}
+        .modal-button{display:flex;gap:10px}
+        .modal-button button{flex:1;padding:12px;border:none;border-radius:10px;cursor:pointer}
+        .btn-confirm{background:#FF8AA8;color:#fff}
+        .btn-cancel{background:#ddd}
+
+        .treatment-list{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            margin-top:10px;
+        }
+
+        .treatment-item{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            background:#FFF9FA;
+            padding:12px;
+            border-radius:12px;
+            border:2px solid #FFE5EC;
+            cursor:pointer;
+            transition:.2s;
+        }
+
+        .treatment-item:hover{
+            background:#FFEAF1;
+        }
+
+        .treatment-item input{
+            width:18px;
+            height:18px;
+        }
+
+            .dropdown-treatment{
+        position:relative;
+        width:100%;
+        }
+
+        .dropdown-btn{
+            width:100%;
+            padding:12px;
+            border:2px solid #FFE5EC;
+            border-radius:12px;
+            background:#FFF9FA;
+            text-align:left;
+            cursor:pointer;
+            font-size:15px;
+        }
+
+        .dropdown-content{
+            display:none;
+            position:absolute;
+            width:100%;
+            max-height:250px;
+            overflow-y:auto;
+            background:white;
+            border:2px solid #FFE5EC;
+            border-radius:12px;
+            margin-top:5px;
+            z-index:1000;
+            box-shadow:0 5px 15px rgba(0,0,0,.1);
+        }
+
+        .dropdown-content label{
+            display:block;
+            padding:10px 15px;
+            cursor:pointer;
+        }
+
+        .dropdown-content label:hover{
+            background:#FFF0F5;
+        }
+
+        .dropdown-content{
+            display:none;
+            position:absolute;
+            width:100%;
+            max-height:250px;
+            overflow-y:auto;
+            background:#fff;
+            border:2px solid #FFE5EC;
+            border-radius:12px;
+            margin-top:5px;
+            z-index:1000;
+            box-shadow:0 5px 15px rgba(0,0,0,.1);
+            animation:fadeDown .25s ease;
+        }
+
+        .dropdown-content label{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:12px;
+        }
+
+        .dropdown-content input{
+            width:18px;
+            height:18px;
+        }
+
+        /* Opsional: Efek loading saat klik link */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff0f5;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /*==============================
+        WHY CHOOSE US
+        ==============================*/
+
+        .why-us{
+            padding:80px 8%;
+            background:#fff5f8;
+        }
+
+        .why-us h2{
+            text-align:center;
+            font-size:36px;
+            margin-bottom:10px;
+        }
+
+        .why-us span{
+            color:#ff4f87;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#666;
+            margin-bottom:50px;
+        }
+
+        .why-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:25px;
+        }
+
+        .why-card{
+            background:#fff;
+            border-radius:15px;
+            padding:30px;
+            text-align:center;
+            transition:.3s;
+            box-shadow:0 8px 20px rgba(0,0,0,.08);
+        }
+
+        .why-card:hover{
+            transform:translateY(-8px);
+            box-shadow:0 15px 30px rgba(255,79,135,.25);
+        }
+
+        .why-card i{
+            font-size:45px;
+            color:#ff4f87;
+            margin-bottom:15px;
+        }
+
+        .why-card h3{
+            margin-bottom:10px;
+        }
+
+        .why-card p{
+            color:#666;
+            line-height:1.6;
+        }
+
+       /* =========================================
+        STYLE SECTION LOKASI
+        Mengatur jarak dan tampilan peta
+        ========================================= */
+
+        .location-section{
+            margin-top: 30px;
+        }
+
+        /*
+        Mengatur ukuran dan tampilan iframe
+        agar responsive di desktop maupun mobile
+        */
+        .location-section iframe{
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+        }
+</style>
+</head>
+<body>
+
+    <div id="loading" class="loading-overlay">
+        <h2>ChicCut Sedang Memuat... ✨</h2>
+    </div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">✨ ChicCut Salon</a>
+             <div class="menu-toggle" id="menu-toggle">
+                ☰
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="service.html">Layanan</a></li>
+                <li><a href="galery.html">Galeri & Testi</a></li>
+                <li><a href="Reservasi.html" class="active">Reservasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; min-width: 0;">
+        <section class="card">
+            <h2>📅 Form Reservasi Online</h2>
+            <form id="bookingForm" onsubmit="return handleFormSubmit(event)">
+                <div>
+                    <label for="nama">Nama Lengkap Kamu:</label>
+                    <input type="text" id="nama" required placeholder="Masukkan nama kamu">
+                </div>
+
+                <div>
+                    <label>Pilih Tanggal Kedatangan (Juli 2026):</label>
+                    <div class="calendar-container">
+                        <div style="text-align: center; font-weight: bold; color: #6D6875; margin-bottom: 5px;">📅 Juli 2026</div>
+                        <div class="calendar-grid">
+                            <div class="calendar-header">Min</div><div class="calendar-header">Sen</div><div class="calendar-header">Sel</div>
+                            <div class="calendar-header">Rab</div><div class="calendar-header">Kam</div><div class="calendar-header">Jum</div><div class="calendar-header">Sab</div>
+                            
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 1)">1</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 2)">2</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 3)">3</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 4)">4</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 5)">5</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 6)">6</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 7)">7</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 8)">8</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 9)">9</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 10)">10</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 11)">11</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 12)">12</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 13)">13</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 14)">14</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 15)">15</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 16)">16</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 17)">17</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 18)">18</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 19)">19</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 20)">20</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 21)">21</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 22)">22</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 23)">23</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 24)">24</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 25)">25</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 26)">26</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 27)">27</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 28)">28</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 29)">29</button>
+                            <button type="button" class="date-btn" onclick="pilihTanggal(this, 30)">30</button>
+                            <button type="button" class="date-btn booked" onclick="pilihTanggal(this, 31)">31</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="tanggal_terpilih" required>
+                </div>
+
+                <div>
+                    <label for="jam">Pilih Jam Kedatangan:</label>
+                    <select id="jam" required>
+                        <option value="">-- Pilih Jam Slot --</option>
+                        <option value="10:00">10:00 WIB (Pagi)</option>
+                        <option value="11:30">11:30 WIB (Siang)</option>
+                        <option value="13:00">13:00 WIB (Siang)</option>
+                        <option value="14:30">14:30 WIB (Sore)</option>
+                        <option value="16:00">16:00 WIB (Sore)</option>
+                        <option value="17:30">17:30 WIB (Sore)</option>
+                    </select>
+                </div>
+
+    <div>
+    <label>Pilih Treatment:</label>
+
+    <div class="dropdown-treatment">
+
+        <button type="button" class="dropdown-btn" onclick="toggleTreatment()">
+            <span id="treatmentText">-- Pilih Treatment --</span> ▼
+        </button>
+
+        <div class="dropdown-content" id="treatmentDropdown">
+            <label><input type="checkbox" value="Cute Korean Bangs Cut" data-harga="45000" onchange="hitungTotal()"> Cute Korean Bangs Cut (Rp 45.000)</label>
+            <label><input type="checkbox" value="Signature Haircut + Styling" data-harga="90000" onchange="hitungTotal()"> Signature Haircut + Styling (Rp 90.000)</label>
+            <label><input type="checkbox" value="Layer Cut" data-harga="90000" onchange="hitungTotal()"> Layer Cut (Rp 90.000)</label>
+            <label><input type="checkbox" value="Bob Cut" data-harga="85000" onchange="hitungTotal()"> Bob Cut (Rp 85.000)</label>
+            <label><input type="checkbox" value="Pixie Cut" data-harga="80000" onchange="hitungTotal()"> Pixie Cut (Rp 80.000)</label>
+            <label><input type="checkbox" value="Gunting Rambut Gaya Korea" data-harga="100000" onchange="hitungTotal()"> Gunting Rambut Gaya Korea (Rp 100.000)</label>
+            <label><input type="checkbox" value="Strawberry Creambath" data-harga="75000" onchange="hitungTotal()"> Strawberry Creambath (Rp 75.000)</label>
+            <label><input type="checkbox" value="Pastel Hair Coloring" data-harga="350000" onchange="hitungTotal()"> Pastel Hair Coloring (Rp 350.000)</label>
+            <label><input type="checkbox" value="Hair Spa Premium" data-harga="150000" onchange="hitungTotal()"> Hair Spa Premium (Rp 150.000)</label>
+            <label><input type="checkbox" value="Keratin Treatment" data-harga="350000" onchange="hitungTotal()"> Keratin Treatment (Rp 350.000)</label>
+            <label><input type="checkbox" value="Smoothing" data-harga="400000" onchange="hitungTotal()"> Smoothing (Rp 400.000)</label>
+            <label><input type="checkbox" value="Detox Scalp" data-harga="130000" onchange="hitungTotal()"> Detox Scalp (Rp 130.000)</label>
+        </div>
+    </div>
+</div>
+
+                <div class="total-box" id="totalBiaya">
+                    Estimasi Total: Rp 0
+                </div>
+
+                <div>
+                    <label for="catatan">Catatan Tambahan (Opsional):</label>
+                    <textarea id="catatan" rows="3" placeholder="Contoh: Mau potong rambut poni ala Lisa Blackpink ya kak..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Kirim Form Booking 🎀</button>
+            </form>
+        </section>
+
+        <section class="card" style="height: fit-content;">
+            <h2>📍 Hubungi Kami</h2>
+            <p style="margin-top: 15px; font-size: 14px; color: #6D6875; line-height: 1.6;">
+                <b>Alamat:</b><br>
+                Jl. Sakura Pastel No. 45, Yogyakarta<br><br>
+                <b>WhatsApp:</b><br>
+                0812-3456-7890<br><br>
+                <b>Jam Operasional:</b><br>
+                Setiap Hari (10.00 - 19.00 WIB)
+            </p>
+            <h2>Mengapa Memilih <span>ChicCut Salon?</span></h2>
+            </p>
+            <div class="why-grid">
+                <div class="why-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Stylist Profesional</h3>
+                    <p>Ditangani oleh stylist berpengalaman dan terlatih di bidang kecantikan.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-award"></i>
+                    <h3>Produk Berkualitas</h3>
+                    <p>Menggunakan produk original yang aman dan berkualitas tinggi.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Pelayanan Tepat Waktu</h3>
+                    <p>Sistem reservasi membantu mengurangi waktu antre sehingga lebih nyaman.</p>
+                </div>
+            </div>
+    </section>
+    </div>
+
+   <!-- =========================================
+     SECTION LOKASI CHICCUT SALON
+     Menampilkan peta lokasi salon menggunakan
+     Google Maps Embed tanpa API Key
+    ========================================= -->
+
+    <div class="location-section">
+
+        <!-- Judul lokasi -->
+        <h3>📍 Lokasi ChicCut Salon</h3>
+
+        <!--
+            iframe digunakan untuk menampilkan
+            peta Google Maps secara langsung
+            tanpa perlu API Key
+        -->
+        <iframe
+            src="https://maps.google.com/maps?q=yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="350"
+            style="border:0;border-radius:15px;"
+            loading="lazy">
+        </iframe>
+
+</div>
+    <footer>
+        <p>&copy; 2026 ChicCut Salon. Made with 💖</p>
+    </footer>
+
+<!-- =========================================
+     MODAL KONFIRMASI RESERVASI
+     Popup yang muncul sebelum data
+     booking dikirim oleh pelanggan
+========================================= -->
+<div id="bookingModal" class="modal">
+
+    <div class="modal-content">
+
+        <!-- Judul popup konfirmasi -->
+        <h2>📋 Konfirmasi Reservasi</h2>
+
+        <!-- Menampilkan detail reservasi pelanggan -->
+        <div class="booking-detail">
+
+            <!-- Nama pelanggan -->
+            <p><b>👤 Nama:</b> <span id="mNama"></span></p>
+
+            <!-- Tanggal reservasi -->
+            <p><b>📅 Tanggal:</b> <span id="mTanggal"></span></p>
+
+            <!-- Jam reservasi -->
+            <p><b>⏰ Jam:</b> <span id="mJam"></span></p>
+
+            <!-- Treatment yang dipilih -->
+            <p><b>💇 Treatment:</b> <span id="mTreatment"></span></p>
+
+            <!-- Total biaya treatment -->
+            <p><b>💰 Total:</b> <span id="mTotal"></span></p>
+
+            <!-- Catatan tambahan pelanggan -->
+            <p><b>📝 Catatan:</b> <span id="mCatatan"></span></p>
+
+        </div>
+
+        <!-- Pertanyaan konfirmasi booking -->
+        <p style="text-align:center;color:#FF5C8A;font-weight:bold">
+            Apakah Anda yakin ingin melakukan booking?
+        </p>
+
+        <!-- Tombol aksi modal -->
+        <div class="modal-button">
+
+            <!-- Menutup popup tanpa booking -->
+            <button class="btn-cancel" onclick="tutupModal()">
+                Batal
+            </button>
+
+            <!-- Mengirim data booking -->
+            <button class="btn-confirm" onclick="bookingSekarang()">
+                Ya, Booking 💖
+            </button>
+
+        </div>
+
+        <!-- Informasi tambahan untuk pelanggan -->
+        <p style="text-align:center;color:#FF5C8A;font-weight:bold">
+            💖 Datang 10 Menit Lebih Awal Yaaa Kaaa !!!
+        </p>
+
+        <!-- Pesan pelayanan -->
+        <p style="text-align:center;color:#FF5C8A;font-weight:bold">
+            Kami Akan Menyiapkan Semuanya Agar Pengalaman
+            Perawatanmu Lebih Nyaman dan Tepat Waktu 💞
+        </p>
+
+    </div>
+
+</div>
+    
+<script>
+    let bookingData={};
+
+    function hitungTotal(){
+    const checked=document.querySelectorAll('#treatmentDropdown input:checked');
+    let total=0;
+    let nama=[];
+    checked.forEach(item=>{
+        total+=parseInt(item.dataset.harga);
+        nama.push(item.value);
+    });
+    document.getElementById("totalBiaya").innerHTML=
+    "Estimasi Total: Rp "+total.toLocaleString("id-ID");
+    if(nama.length==0){
+        document.getElementById("treatmentText").innerHTML="-- Pilih Treatment --";
+    }else{
+        document.getElementById("treatmentText").innerHTML=
+        nama.length+" Treatment Dipilih";
+    }
+}
+
+    function pilihTanggal(el,tgl){
+    if(el.classList.contains('booked')){
+    alert("Maaf, tanggal tersebut sudah penuh.");
+    return;
+    }
+    document.querySelectorAll('.date-btn').forEach(b=>b.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('tanggal_terpilih').value=tgl;
+    }
+
+    function handleFormSubmit(e){
+    e.preventDefault();
+    const nama=document.getElementById("nama").value;
+    const tanggal=document.getElementById("tanggal_terpilih").value;
+    const jam=document.getElementById("jam").value;
+    const treatmentDipilih=document.querySelectorAll("#treatmentDropdown input:checked");
+    if(!tanggal){
+        alert("Pilih tanggal terlebih dahulu.");
+        return false;
+    }
+    if(!jam){
+        alert("Pilih jam kedatangan terlebih dahulu.");
+        return false;
+    }
+    if(treatmentDipilih.length==0){
+        alert("Silakan pilih minimal satu treatment.");
+        return false;
+    }
+    let daftarTreatment=[];
+    let total=0;
+    treatmentDipilih.forEach(item=>{
+        daftarTreatment.push(item.value);
+        total+=parseInt(item.dataset.harga);
+    });
+    bookingData={
+        nama:nama,
+        tanggal:tanggal+" Juli 2026",
+        jam:jam+" WIB",
+        treatment:daftarTreatment.join(", "),
+        total:" Rp "+total.toLocaleString("id-ID"), 
+        catatan:document.getElementById("catatan").value||"-"
+    };
+    mNama.textContent=bookingData.nama;
+    mTanggal.textContent=bookingData.tanggal;
+    mJam.textContent=bookingData.jam;
+    mTreatment.textContent=bookingData.treatment;
+    mTotal.textContent=bookingData.total;
+    mCatatan.textContent=bookingData.catatan;
+    document.getElementById("bookingModal").style.display="flex";
+    return false;
+    }
+    function tutupModal(){
+    document.getElementById('bookingModal').style.display='none';
+    }
+    function bookingSekarang(){
+    document.getElementById('bookingModal').style.display='none';
+    const t=document.getElementById('tanggal_terpilih').value;
+    document.querySelectorAll('.date-btn').forEach(b=>{
+    if(b.textContent==t){b.classList.remove('selected');b.classList.add('booked');}
+    });
+    alert("🎉 Reservasi berhasil!\nTerima kasih Kak "+bookingData.nama+" telah melakukan booking.");
+    document.getElementById('bookingForm').reset();
+    document.getElementById('tanggal_terpilih').value="";
+    document.getElementById('totalBiaya').innerHTML="Estimasi Total: Rp 0";
+    }
+
+    function toggleTreatment(){
+        const menu=document.getElementById("treatmentDropdown");
+
+        if(menu.style.display==="block"){
+            menu.style.display="none";
+        }else{
+            menu.style.display="block";
+        }
+    }
+
+    window.onclick=function(event){
+        if(!event.target.closest(".dropdown-treatment")){
+            document.getElementById("treatmentDropdown").style.display="none";
+        }
+    }
+
+    //Agar Hamburger Berfungsi Atau Berjalan
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const hamburger = document.getElementById("menu-toggle");
+        const navMenu = document.getElementById("nav-links");
+
+        if(hamburger && navMenu){
+            hamburger.addEventListener("click", function () {
+                navMenu.classList.toggle("active");
+            });
+        }
+
+    });
+
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+/* =========================================
+   MEMBUAT PETA LEAFLET
+   Titik koordinat diarahkan ke lokasi salon
+========================================= */
+
+// Membuat peta dan menentukan posisi awal
+const map = L.map('map').setView(
+    [-7.79553, 110.36949],
+    16
+);
+
+/*
+   Menambahkan layer peta dari
+   OpenStreetMap
+*/
+L.tileLayer(
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+/*
+   Menambahkan marker pada lokasi salon
+*/
+L.marker([-7.79553,110.36949])
+.addTo(map)
+
+/*
+   Menampilkan popup ketika marker diklik
+*/
+.bindPopup('ChicCut Salon')
+.openPopup();
+</script>
+</body>
+</html>
