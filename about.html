@@ -6,8 +6,11 @@
     <title>About Us - ChicCut Salon</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /*Mengatur tampilan grid untuk kartu stylist*/
         .stylist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        /*Mendesain tampilan setiap kartu stylist*/
         .stylist-card { text-align: center; background: #FFF9FA; border-radius: 20px; padding: 20px; border: 2px solid #FFE5EC; }
+        /*Mengatur ukuran dan bentuk foto stylist*/
         .stylist-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #FF8AA8; }
 
         /* Opsional: Efek loading saat klik link */
@@ -102,13 +105,18 @@
     </footer>
 
     <script>
+    // Menampilkan loading saat berpindah halaman
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
+            // Mengambil alamat tujuan link
             const href = this.getAttribute('href');
             // Hanya aktifkan jika link adalah navigasi internal
             if (href && !href.startsWith('#')) {
+                // Mencegah pindah halaman secara langsung
                 e.preventDefault();
+                // Menampilkan loading
                 document.getElementById('loading').style.display = 'flex';
+                // Pindah halaman setelah 800 ms
                 setTimeout(() => {
                     window.location.href = href;
                 }, 800); 
@@ -123,7 +131,9 @@
         const navMenu = document.getElementById("nav-links");
 
         if(hamburger && navMenu){
+            // Menampilkan atau menyembunyikan menu saat hamburger diklik
             hamburger.addEventListener("click", function () {
+                // Menambahkan atau menghapus class active
                 navMenu.classList.toggle("active");
             });
         }
