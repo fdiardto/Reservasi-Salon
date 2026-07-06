@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    // membuat halaman responsif
+    <!-- membuat halaman responsif -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery & Testimonials - ChicCut Salon</title>
     <link rel="stylesheet" href="style.css">
@@ -19,7 +19,7 @@
         }
     }
 
-        /* Opsional: Efek loading saat klik link */
+        /*Opsional: Efek loading saat klik link*/
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -35,7 +35,7 @@
     </style>
 </head>
 <body>
-    // menampilkan loading ketika pengguna berpindah halaman
+    <!-- menampilkan loading ketika pengguna berpindah halaman -->
      <div id="loading" class="loading-overlay">
         <h2>ChicCut Sedang Memuat... ✨</h2>
     </div>
@@ -85,9 +85,9 @@
 
             <section id="video-galeri" style="padding: 20px;">
             <h3 style="text-align: center; margin-bottom: 20px;">Lihat Proses Kami</h3>
-            // mengatur dua kotak video agar sejajar
+            <!-- mengatur dua kotak video agar sejajar -->
             <div class="video-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 800px; margin: auto;">
-                // membuat tampilan kotak video agar terlihat rapi dengan garis putus-putus, sudut melengkung, dan isi berada di tengah
+                <!-- membuat tampilan kotak video agar terlihat rapi dengan garis putus-putus, sudut melengkung, dan isi berada di tengah -->
                 <div class="video-box" style="border: 2px dashed #ff6f91; padding: 20px; border-radius: 15px; text-align: center;">
                     <p><strong>Proses Signature Haircut</strong></p>
                     <a href="https://youtube.com/shorts/ouUcvk2YKpA?si=nmnPcVaTmS1Wriw0" target="_blank" style="color: #ff6f91; font-weight: bold;">Tonton Video ▶</a>
@@ -132,14 +132,14 @@
     </footer>
 
     <script>
-    // menampilkan loading ketika pengguna berpindah halaman
+    //menampilkan loading ketika pengguna berpindah halaman 
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             // Hanya aktifkan jika link adalah navigasi internal
             if (href && !href.startsWith('#')) {
                 e.preventDefault();
-                // menjalankan script setelah halaman selesai dimuat
+                <!-- menjalankan script setelah halaman selesai dimuat -->
                 document.getElementById('loading').style.display = 'flex';
                 setTimeout(() => {
                     window.location.href = href;
@@ -155,7 +155,7 @@
         const navMenu = document.getElementById("nav-links");
 
         if(hamburger && navMenu){
-            // menampilkan atau menyembunyikan menu ketika tombol hamburger ditekan
+            //menampilkan atau menyembunyikan menu ketika tombol hamburger ditekan
             hamburger.addEventListener("click", function () {
                 navMenu.classList.toggle("active");
             });
