@@ -258,14 +258,19 @@
                     <label for="nama">Nama Lengkap Kamu:</label>
                     <input type="text" id="nama" required placeholder="Masukkan nama kamu">
                 </div>
-
+<!---->
                 <div>
                     <label>Pilih Tanggal Kedatangan (Juli 2026):</label>
                     <div class="calendar-container">
                         <div style="text-align: center; font-weight: bold; color: #6D6875; margin-bottom: 5px;">📅 Juli 2026</div>
                         <div class="calendar-grid">
-                            <div class="calendar-header">Min</div><div class="calendar-header">Sen</div><div class="calendar-header">Sel</div>
-                            <div class="calendar-header">Rab</div><div class="calendar-header">Kam</div><div class="calendar-header">Jum</div><div class="calendar-header">Sab</div>
+                            <div class="calendar-header">Min</div>
+                            <div class="calendar-header">Sen</div>
+                            <div class="calendar-header">Sel</div>
+                            <div class="calendar-header">Rab</div>
+                            <div class="calendar-header">Kam</div>
+                            <div class="calendar-header">Jum</div>
+                            <div class="calendar-header">Sab</div>
                             
                             <button type="button" class="date-btn" onclick="pilihTanggal(this, 1)">1</button>
                             <button type="button" class="date-btn" onclick="pilihTanggal(this, 2)">2</button>
@@ -489,6 +494,8 @@
 <script>
     let bookingData={};
 
+    
+//MENGHITUNG TOTAL BIAYA
     function hitungTotal(){
     const checked=document.querySelectorAll('#treatmentDropdown input:checked');
     let total=0;
@@ -507,6 +514,8 @@
     }
 }
 
+
+// Fungsi untuk memilih tanggal, menandai tanggal yang dipilih, dan menyimpan tanggal ke input tersembunyi.
     function pilihTanggal(el,tgl){
     if(el.classList.contains('booked')){
     alert("Maaf, tanggal tersebut sudah penuh.");
@@ -517,12 +526,19 @@
     document.getElementById('tanggal_terpilih').value=tgl;
     }
 
+    
+    //Fungsi melakukan validasi data, mengambil seluruh input pelanggan, kemudian menampilkan popup konfirmasi.
     function handleFormSubmit(e){
     e.preventDefault();
-    const nama=document.getElementById("nama").value;
-    const tanggal=document.getElementById("tanggal_terpilih").value;
-    const jam=document.getElementById("jam").value;
+    const nama=
+    document.getElementById("nama").value;
+    const tanggal=
+    document.getElementById("tanggal_terpilih").value;
+    const jam=
+    document.getElementById("jam").value;
     const treatmentDipilih=document.querySelectorAll("#treatmentDropdown input:checked");
+
+    // Memastikan seluruh data telah diisi.
     if(!tanggal){
         alert("Pilih tanggal terlebih dahulu.");
         return false;
@@ -535,6 +551,8 @@
         alert("Silakan pilih minimal satu treatment.");
         return false;
     }
+
+//
     let daftarTreatment=[];
     let total=0;
     treatmentDipilih.forEach(item=>{
@@ -558,9 +576,15 @@
     document.getElementById("bookingModal").style.display="flex";
     return false;
     }
+
+
+    // Menutup popup konfirmasi reservasi
     function tutupModal(){
     document.getElementById('bookingModal').style.display='none';
     }
+
+
+    // MEMPROSES BOOKING
     function bookingSekarang(){
     document.getElementById('bookingModal').style.display='none';
     const t=document.getElementById('tanggal_terpilih').value;
@@ -573,6 +597,7 @@
     document.getElementById('totalBiaya').innerHTML="Estimasi Total: Rp 0";
     }
 
+// Fungsi untuk menampilkan atau menyembunyikan dropdown treatment
     function toggleTreatment(){
         const menu=document.getElementById("treatmentDropdown");
 
@@ -583,6 +608,7 @@
         }
     }
 
+// Menutup dropdown treatment jika klik di luar area dropdown
     window.onclick=function(event){
         if(!event.target.closest(".dropdown-treatment")){
             document.getElementById("treatmentDropdown").style.display="none";
