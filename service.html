@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Area Rekomendasi / Best Seller Card */
+        /* Mengatur daftar layanan favorit menjadi bentuk Grid */
         .featured-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
-        .featured-card {
+
+        /* Mengatur tampilan setiap kartu layanan favorit */
+        .featured-card { 
             background: linear-gradient(135deg, #FFF0F5 0%, #FFE5EC 100%);
             border: 2px dashed #FF8AA8;
             border-radius: 20px;
@@ -22,7 +25,9 @@
             position: relative;
             overflow: hidden;
         }
-        .badge {
+
+        /* Label seperti Best Seller, Popular, Recommended */
+        .badge { 
             position: absolute;
             top: 10px;
             right: 10px;
@@ -34,19 +39,24 @@
             font-weight: bold;
         }
 
-        /* Desain Tabel Price List Lucu */
-        .table-container {
+        /* Wadah tabel daftar harga */
+        .table-container { 
             background: #FFFFFF;
             border-radius: 20px;
             overflow: hidden;
             border: 2px solid #FFE5EC;
             box-shadow: 0 8px 20px rgba(255, 182, 193, 0.15);
         }
-        table {
+
+        /* Mengatur ukuran tabel menjadi penuh */
+        table { 
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        /* th mengatur tampilan header tabel */
+        /* td mengatur isi tabel */
+        th, td { 
             padding: 18px 20px;
             text-align: left;
         }
@@ -68,15 +78,19 @@
         tr {
             transition: background-color 0.3s ease;
         }
-        tr:hover {
+
+        /* Memberikan efek saat mouse berada di atas baris tabel */
+        tr:hover { 
             background-color: #FFF5F7;
         }
 
-        /* Tombol Filter Kategori */
+        /* Tempat Tombol Filter Kategori */
         .filter-section {
             text-align: center;
             margin-bottom: 25px;
         }
+
+        /* Mengatur posisi tombol filter */
         .filter-buttons {
             display: inline-flex;
             gap: 12px;
@@ -85,6 +99,8 @@
             border-radius: 30px;
             border: 1px solid #FFE5EC;
         }
+
+        /* Desain tombol filter */
         .filter-btn {
             padding: 10px 24px;
             border: none;
@@ -95,6 +111,8 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
+
+        /* Warna tombol yang sedang aktif */
         .filter-btn.active {
             background: #FF8AA8;
             color: white;
@@ -116,6 +134,7 @@
             padding: 0;
         }
 
+        /* Mengatur tampilan setiap item layanan */
         .price-list-container li {
             padding: 10px;
             border-bottom: 1px solid #ffeef2;
@@ -144,6 +163,7 @@
             transition: 0.3s;
         }
 
+        /* Efek ketika tombol reservasi disentuh mouse */
         .btn-reserve:hover {
             background-color: #ff4775;
             transform: scale(1.05);

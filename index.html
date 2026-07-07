@@ -8,6 +8,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
+        /*untuk mengatur tampilan utama yang berisi teks di sebelah kiri dan gambar sebelah kanan */
         .hero { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 60px 0; }
         .hero-text { flex: 1; }
         .hero-img { flex: 1; text-align: center; }
@@ -17,6 +18,7 @@
 
     <link rel="stylesheet" href="style.css">
     <style>
+        /*sebagai wadah (container) untuk kartu hairstylist */
         .stylist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
         .stylist-card { text-align: center; background: #FFF9FA; border-radius: 20px; padding: 20px; border: 2px solid #FFE5EC; }
         .stylist-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #FF8AA8; }
@@ -25,12 +27,14 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Area Rekomendasi / Best Seller Card */
+        /*sebagai wadah untuk menyusun kartu layanan unggulan agar tampil rapi dan responsif*/
         .featured-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
+        /*mengatur tampilan kartu layanan unggulan*/
         .featured-card {
             background: linear-gradient(135deg, #FFF0F5 0%, #FFE5EC 100%);
             border: 2px dashed #FF8AA8;
@@ -40,6 +44,7 @@
             position: relative;
             overflow: hidden;
         }
+        /*digunakan untuk membuat label kecil pada kartu layanan unggulan, seperti tulisan "🔥 Best Seller" atau "✨ Recommended".*/
         .badge {
             position: absolute;
             top: 10px;
@@ -53,6 +58,7 @@
         }
 
         /* Desain Tabel Price List Lucu */
+        /*digunakan untuk membungkus tabel (Price List)*/
         .table-container {
             background: #FFFFFF;
             border-radius: 20px;
@@ -60,14 +66,17 @@
             border: 2px solid #FFE5EC;
             box-shadow: 0 8px 20px rgba(255, 182, 193, 0.15);
         }
+        /*untuk mengatur tampilan dasar tabel*/
         table {
             width: 100%;
             border-collapse: collapse;
         }
+        /*untuk mengatur tampilan semua sel pada tabel, baik header maupun isi tabel.*/
         th, td {
             padding: 18px 20px;
             text-align: left;
         }
+        /*untuk mengatur tampilan judul paling atas pada tabel*/
         th {
             background-color: #FF8AA8;
             color: white;
@@ -75,26 +84,31 @@
             font-size: 16px;
             letter-spacing: 0.5px;
         }
+        /*untuk mengatur tampilan isi data pada tabel*/
         td {
             border-bottom: 1px solid #FFE5EC;
             color: #5D4037;
             font-size: 15px;
         }
+        /*untuk menghilangkan garis bawah pada baris terakhir tabel.*/
         tr:last-child td {
             border-bottom: none;
         }
+        /*untuk memberikan efek animasi (transisi) pada setiap baris tabel ketika terjadi perubahan warna*/
         tr {
             transition: background-color 0.3s ease;
         }
+        /*untuk memberikan efek saat kursor diarahkan*/
         tr:hover {
             background-color: #FFF5F7;
         }
-
         /* Tombol Filter Kategori */
+        /*untuk mengatur bagian filter kategori layanan seperti semua, gunting rambut dan perawatan*/
         .filter-section {
             text-align: center;
             margin-bottom: 25px;
         }
+        /*untuk mengatur wadah (container) tombol filter eperti semua, gunting rambut dan perawatan*/
         .filter-buttons {
             display: inline-flex;
             gap: 12px;
@@ -103,6 +117,7 @@
             border-radius: 30px;
             border: 1px solid #FFE5EC;
         }
+        /*untuk mengatur tampilan tombol filter*/
         .filter-btn {
             padding: 10px 24px;
             border: none;
@@ -113,6 +128,7 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
+        /*untuk mengatur tampilan tombol filter yang sedang aktif (dipilih).*/
         .filter-btn.active {
             background: #FF8AA8;
             color: white;
@@ -136,34 +152,51 @@
 
     <link rel="stylesheet" href="style.css">
     <style>
+        /*untuk mengatur tampilan galeri foto dan video*/
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
+        /*Mengatur tampilan gambar (img) dan video YouTube (iframe) agar memiliki ukuran dan desain yang sama.*/
         .gallery-grid img,.gallery-grid iframe{width:100%;height:220px;border-radius:15px;border:3px solid #FFE5EC;object-fit:cover;box-sizing:border-box;}
+        /*sebagai wadah seluruh testimoni pelanggan*/
         .testi-section { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+        /*untuk membuat kotak testimoni agar terlihat seperti bubble.*/
         .testi-bubble { background: #FFF5F7; border-radius: 20px; padding: 20px; border-left: 5px solid #FF8AA8; position: relative; }
     </style>
 
     <link rel="stylesheet" href="style.css">
     <style>
+        /*Mengatur form reservasi*/
         form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        /*Mengatur tampilan tulisan keterangan pada setiap input.*/
         label { font-weight: 600; color: #6D6875; }
+        /*Mengatur tampilan semua kolom input, dropdown, dan kotak catatan*/
         input, select, textarea { padding: 12px; border-radius: 12px; border: 2px solid #FFE5EC; background-color: #FFF9FA; width: 100%; outline: none; }
+        /*Mengubah tampilan input saat sedang dipilih atau diklik*/
         input:focus, select:focus, textarea:focus { border-color: #FF8AA8; box-shadow: 0 0 8px rgba(255,138,168,0.2); }
+        /*menampilkan Total Harga Reservasi.*/
         .total-box { background: #FFF0F5; padding: 15px; border-radius: 12px; font-weight: bold; color: #FF5C8A; border: 1px dashed #FF8AA8; }
         
         /* Desain Kalender Lucu */
+        /*sebagai wadah kalender reservasi.*/
         .calendar-container { background: #FFF9FA; border: 2px solid #FFE5EC; border-radius: 15px; padding: 15px; margin-top: 5px; }
+        /*Mengatur susunan tanggal kalender*/
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; margin-top: 10px; }
+        /*Mengatur tampilan nama hari pada kalender*/
         .calendar-header { font-weight: bold; color: #FF8AA8; font-size: 14px; }
+        /*mengatur tampilan setiap tombol tanggal pada kalender.*/
         .date-btn { padding: 10px; border: none; border-radius: 10px; background: #FFFFFF; color: #5D4037; cursor: pointer; font-weight: bold; transition: all 0.2s; border: 1px solid #FFE5EC; }
+        /*Memberikan efek saat kursor diarahkan ke tombol*/
         .date-btn:hover:not(.booked) { background: #FFD3E1; color: #FF5C8A; }
         
         /* WARNA UNTUK TANGGAL YANG SUDAH DI-RESERVASI (BOOKED) */
+        /*digunakan untuk menandai tanggal yang sudah dibooking8*/
         .date-btn.booked { background: #FFCCD5; color: #FF4D6D; border: 1px solid #FFB3C1; cursor: not-allowed; position: relative; }
+        /*untuk menambahkan ikon ❌ secara otomatis pada tanggal yang sudah dibooking.*/
         .date-btn.booked::after { content: '❌'; position: absolute; top: -2px; right: -2px; font-size: 10px; }
         
         /* Warna saat user memilih tanggal yang tersedia */
         .date-btn.selected { background: #FF8AA8; color: white; border-color: #FF8AA8; }
 
+        /*digunakan sebagai wadah tombol-tombol mengambang*/
         .floating-container {
             position: fixed;
             bottom: 20px;
@@ -173,7 +206,7 @@
             gap: 10px;
             z-index: 9999; /* Agar selalu di atas elemen lain */
         }
-
+        /*untuk mengatur tampilan setiap tombol mengambang*/
         .float-btn {
             padding: 12px 20px;
             border-radius: 50px;
@@ -186,14 +219,16 @@
             align-items: center;
             gap: 8px;
         }
-
+        /*tombol ukurannya sedikit membesar dengan animasi yang halus.*/
         .float-btn:hover {
             transform: scale(1.05);
         }
-
+        /*untuk memberikan warna latar belakang pada tombol Reservasi.*/
         .reservasi-btn { background-color: #FF8AA8; } /* Emas */
+        /*untuk memberikan warna pada tombol WhatsApp.*/
         .wa-btn { background-color: #25d366; } /* Hijau WA */
 
+        /*untuk membuat tombol "Kembali ke Atas" (Back to Top)*/
         .back-to-top {
             position: fixed;
             bottom: 20px;
@@ -214,17 +249,20 @@
             pointer-events: none; /* Tidak bisa diklik saat disembunyikan */
         }
 
+        /*untuk menampilkan tombol "Back to Top"*/
         .back-to-top.show {
             opacity: 1;
             pointer-events: auto;
         }
 
+        /*memberikan efek ketika kursor diarahkan ke tombol Back to Top.*/
         .back-to-top:hover {
             transform: translateY(-5px);
             background-color: #d4af37; /* Berubah warna emas saat dihover */
         }
 
         /* ===== SOCIAL MEDIA ===== */
+        /*untuk wadah ikon media sosial*/
         .social-media{
             display: flex;
             justify-content: flex-start; /* sejajar dengan tombol */
@@ -234,6 +272,7 @@
             width: 100%;
         }
 
+        /*untuk mengatur tampilan setiap ikon media sosial*/
         .social-media a{
             width: clamp(48px, 8vw, 58px);
             height: clamp(48px, 8vw, 58px);
@@ -251,6 +290,7 @@
             overflow: hidden;
         }
 
+        /*untuk membuat lapisan (layer) tambahan di belakang ikon media sosial*/
         .social-media a::before{
             content: "";
             position: absolute;
@@ -262,10 +302,12 @@
             z-index: -1;
         }
 
+        /*untuk menampilkan efek animasi pada ikon media sosial saat kursor diarahkan*/
         .social-media a:hover::before{
             transform: scale(1);
         }
 
+        /*untuk memberikan efek saat kursor (mouse) diarahkan ke ikon media sosial*/
         .social-media a:hover{
             transform: translateY(-8px) scale(1.12);
             border-color: #FFE5EC;
@@ -274,14 +316,17 @@
                         0 0 60px #FFE5EC;
         }
 
+        /*untuk memberikan efek animasi pada ikon naik dan berputar selama 4 detik*/
         .social-media a i{
             transition: .4s;
         }
 
+        /*digunakan untuk memberikan efek putaran pada ikon media sosial*/
         .social-media a:hover i{
             transform: rotate(360deg);
         }
 
+        /*untuk mengatur tampilan website ketika dibuka pada layar yang lebarnya 768 piksel atau kurang*/
         @media (max-width:768px){
             .social-media{
                 justify-content:center;
@@ -292,12 +337,14 @@
 </head>
 <body>
 
+    <!--untuk membuat halaman loading (loading screen) -->
     <div id="loading" class="loading-overlay">
         <h2>ChicCut Sedang Memuat... ✨</h2>
     </div>
 
     <header>  
         <nav>
+            <!--untuk membuat bagian navigasi (Navbar) pada website ChicCut Salon.-->
             <a href="index.html" class="logo">✨ ChicCut Salon</a>
             <div class="menu-toggle" id="menu-toggle">
                 ☰
@@ -312,15 +359,18 @@
         </nav>
     </header>
 
+    <!-- untuk membuat wadah utama (container) dan banner promo -->
     <div class="container">
         <div id="promo-banner">🎉 Memuat promo spesial hari ini...</div>
 
+        <!-- untuk membuat Hero Section, yaitu bagian pertama yang dilihat pengunjung -->
         <section class="hero">
             <div class="hero-text">
                 <h1>Ubah Penampilanmu Jadi Lebih Lucu & Berkilau! ✨</h1>
                 <p style="margin: 20px 0; color: #6D6875; line-height: 1.6;">Selamat datang di ChicCut Salon. Tempat di mana rambut impianmu menjadi kenyataan dengan pelayanan super ramah dan suasana yang menggemaskan!</p>
                 <a href="Reservasi.html" class="btn">Yuk, Booking Sekarang! 💖</a>
                 <!-- Social Media -->
+                 /*untuk menampilkan ikon media sosial yang dapat diklik oleh pengguna.*/
                 <div class="social-media">
                     <a href="https://linkedin.com/in/USERNAME" target="_blank" class="linkedin">
                         <i class="fab fa-linkedin-in"></i>
@@ -338,6 +388,7 @@
             </div>
         </section>
 
+        <!-- untuk membuat bagian Promo Bulan Ini -->
         <section class="card" style="background-color: #FFF0F5;">
             <h2>🎁 Promo Bulan Ini</h2>
             <p style="margin-top: 10px;">Dapatkan potongan harga khusus untuk kamu yang melakukan reservasi lewat website resmi kami:</p>
@@ -347,6 +398,7 @@
         </section>
     </div>
 
+    <!-- untuk membuat bagian "Tentang Kami (About Us) -->
     <h1 style="text-align: center; margin-top: 30px; margin-bottom: 10px;">🌸 Tentang Kami (About Us)</h1>
     <div class="container">
         <section class="card">
@@ -357,6 +409,7 @@
         </section>
 
         <section>
+            <!-- untuk membuat bagian "Our Hairstylists" -->
             <h2 style="text-align: center;">✂️ Kenalan Sama Our Hairstylists Yuk!</h2>
             <div class="stylist-grid">
                 <div class="stylist-card">
@@ -383,6 +436,7 @@
                     <p style="color: #FF5C8A; font-weight: bold;">Styling & Special Occasion Expert</p>
                     <p style="font-size: 14px; color: #6D6875; margin-top: 5px;">Ahli menata rambut untuk acara khusus, seperti pesta, wisuda, atau pernikahan.</p>
                 </div>
+                <!-- untuk membuat sebuah tombol yang mengarahkan pengguna ke halaman About -->
                 <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
                 <a href="about.html" class="btn-tentang" style="
                 display: inline-block;
@@ -399,6 +453,7 @@
             </div>
         </section>
 
+        <!-- untuk membuat halaman Layanan yang menampilkan menu atau treatment favorit -->
         <h1 style="text-align: center; margin-top: 30px; margin-bottom: 10px;">Layanan</h1>
         <div class="container">
         <h2 style="text-align: center; margin-bottom: 25px;">👑 Menu Paling Favorit Minggu Ini</h2>
@@ -417,6 +472,7 @@
             </div>
         </div>
 
+        <!-- untuk membuat bagian daftar harga (Price List Salon) sekaligus menyediakan tombol filter -->
         <section class="card">
             <h2 style="text-align: center; margin-bottom: 10px;">🎀 Ribbon Price List Salon</h2>
             <p style="text-align: center; color: #6D6875; margin-bottom: 30px;">Silakan pilih kategori menu treatment kecantikan kami di bawah ini:</p>
@@ -429,16 +485,21 @@
                 </div>
             </div>
 
+            <!-- untuk membuat tabel daftar harga layanan (Price List) -->
             <div class="table-container">
                 <table>
+                    <!-- untuk menyimpan judul setiap kolom.-->
                     <thead>
                         <tr>
+                            <!-- untuk membuat judul kolom.-->
                             <th>Nama Layanan & Deskripsi</th>
                             <th>Kategori</th>
                             <th>Durasi</th>
                             <th>Harga Resmi</th>
                         </tr>
                     </thead>
+                    <!-- menyimpan semua data isi tabel. -->
+                     <!-- sebagai identitas tabel sehingga JavaScript dapat mengambil isi tabel -->
                     <tbody id="treatment-table">
                         <tr data-category="haircut">
                             <td>
@@ -480,10 +541,12 @@
                 </table>
             </div>
             
+            <!-- untuk membuat tombol reservasi diarahkan ke reservasi -->
             <div style="text-align: center; margin-top: 30px;">
                 <a href="Reservasi.html" class="btn">Ambil Slot Waktumu Sekarang! 📅</a>
             </div>
 
+            <!-- untuk membuat tombol navigasi diarahkan ke layanan-->
             <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
             <a href="service.html" class="btn-tentang" style="
                 display: inline-block;
@@ -499,6 +562,7 @@
         </div>
         </section>
 
+        <!-- untuk membuat bagian Galeri & Testimoni -->
         <h1 style="text-align: center; margin-top: 30px; margin-bottom: 10px;">Galeri & Testi</h1>
         <div class="container">
         <section class="card">
@@ -510,7 +574,8 @@
                 <img src="Asset/Treatment/Pastel Hair Coloring.jpg" alt="Cat Rambut Pastel">
             
                     <div style="width:100%; height:220px; border:3px solid #FFE5EC; border-radius:15px; overflow:hidden; box-sizing:border-box;">
-                    <iframe
+                    <!-- wadah untuk video YouTube. -->
+                        <iframe
                         style="width:100%; height:100%; border:none;"
                         src="https://www.youtube.com/embed/p_7dKsgXgv8?si=U6dmJmIXgPKDauz-"
                         title="YouTube video player"
@@ -522,6 +587,7 @@
             </div>
         </section>
 
+        <!-- untuk membuat bagian Testimoni Pelanggan -->
         <section class="card">
             <h2>💬 Kata Mereka (Testimoni Pelanggan)</h2>
             <div class="testi-section">
@@ -535,6 +601,7 @@
                 </div>
             </div>
 
+            <!-- untuk membuat tombol navigasi diarahkan ke galery -->
             <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
             <a href="galery.html" class="btn-tentang" style="
                 display: inline-block;
@@ -551,6 +618,7 @@
         </section>
     </div>
 
+    <!-- untuk membuat tombol navigasi diarahkan ke reservasi -->
     <section id="reservasi-beranda" style="text-align: center; padding: 40px 20px; background-color: #fff0f5;">
         <h3>Siap untuk Tampil Menawan?</h3>
         <p>Jangan lewatkan kesempatan untuk memanjakan diri Anda. Booking jadwal Anda sekarang sebelum slot penuh!</p>
@@ -579,6 +647,7 @@
     </footer>
 
     <script>
+        /*menampilkan banner promo secara otomatis berdasarkan hari saat website dibuka.*/
         const banner = document.getElementById('promo-banner');
         const hari = new Date().getDay();
         // 0 = Minggu, 2 = Selasa, dst.
@@ -588,7 +657,7 @@
             banner.innerHTML = "💝 PROMO NEW MEMBER: Gunakan kode CUTEHAIR saat datang ke kasir untuk diskon 10%! 💝";
         }
 
-        // JS Fungsi Filter Menu Interaktif
+        // untuk memfilter daftar layanan salon
         function filterMenu(category, button) {
             // Mengatur status aktif tombol filter
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -605,6 +674,7 @@
             });
         }
 
+        // untuk menampilkan animasi loading setiap kali pengguna berpindah halaman
         document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -619,7 +689,7 @@
         });
     });
 
-    //Agar Hamburger Berfungsi Atau Berjalan
+    //untuk membuat menu navigasi responsif (hamburger menu)
     document.addEventListener("DOMContentLoaded", function () {
 
         const hamburger = document.getElementById("menu-toggle");
@@ -633,6 +703,7 @@
 
     });
 
+    //untuk menampilkan dan menyembunyikan tombol Back to Top secara otomatis
     const backToTopButton = document.getElementById("backToTop");
 
     window.addEventListener("scroll", () => {
